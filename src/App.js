@@ -1,23 +1,67 @@
 import React, { Component } from "react";
-import { MDBBtn, MDBCol, MDBContainer, MDBRow } from "mdbreact";
-import "./index.css";
-import logo from "./logo.png";
+import {
+  MDBNavbar,
+  MDBContainer,
+  MDBNavLink,
+  MDBNavItem,
+  MDBHamburgerToggler,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBCollapse,
+} from "mdbreact";
+import { BrowserRouter as Router } from "react-router-dom";
 
-class App extends Component {
+class hamburgerMenuPage extends Component {
+  state = {
+    collapse1: "",
+  };
+
+  toggleSingleCollapse = (collapseId) => () => {
+    this.setState({
+      [collapseId]: !this.state[collapseId],
+    });
+  };
+
   render() {
+    const mdbcontainerDesign = {
+      margin: "0px",
+      padding: "0px",
+      maxWidth: "100%",
+    };
+    const mdbnavbarDesign = {
+      backgroundColor: "#ED1C24",
+      marginTop: "0px",
+    };
     return (
-      <MDBContainer>
-        <MDBRow center style={{ height: "100vh" }}>
-          <MDBCol middle="true" sm="8" className="text-center">
-            <img src={logo} alt="logo" style={{ width: "10rem" }} />
-            <h1>Welcome to Your MDB React App</h1>
-            <p className="mb-2">The application is configured and ready to import our components.</p>
-            <MDBBtn href="https://mdbootstrap.com/docs/react/" target="blank" color="light-blue"><strong>Check out our docs!</strong></MDBBtn>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
+      <Router>
+        <MDBContainer style={mdbcontainerDesign}>
+          <MDBNavbar style={mdbnavbarDesign} dark>
+            <MDBContainer style={mdbcontainerDesign}>
+              <MDBNavbarBrand className="white-text">MDBNavbar</MDBNavbarBrand>
+              <MDBHamburgerToggler
+                onClick={this.toggleSingleCollapse("collapse2")}
+                isOpen={false}
+                id="hamburger2"
+              />
+              <MDBCollapse isOpen={this.state.collapse2} navbar>
+                <MDBNavbarNav left>
+                  <MDBNavItem active>
+                    <MDBNavLink to="#!">Home</MDBNavLink>
+                  </MDBNavItem>
+                  <MDBNavItem>
+                    <MDBNavLink to="#!">Link</MDBNavLink>
+                  </MDBNavItem>
+                  <MDBNavItem>
+                    <MDBNavLink to="#!">Profile</MDBNavLink>
+                  </MDBNavItem>
+                </MDBNavbarNav>
+              </MDBCollapse>
+            </MDBContainer>
+          </MDBNavbar>
+        </MDBContainer>
+      </Router>
     );
   }
 }
 
-export default App;
+export default hamburgerMenuPage;
